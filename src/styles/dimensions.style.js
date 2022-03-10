@@ -1,0 +1,28 @@
+import { Dimensions } from "react-native";
+
+export default {
+	FULL_WIDTH: Dimensions.get("window").width,
+	FULL_HEIGHT: Dimensions.get("window").height,
+	HALF_WIDTH: Dimensions.get("window").width * 0.5,
+	HALF_HEIGHT: Dimensions.get("screen").height * 0.5,
+	PADDING_SM: 5,
+	PADDING_MD: 10,
+	PADDING_L: 20,
+	PADDING_XL: 30,
+	MARGIN_SM: 5,
+	MARGIN_MD: 10,
+	MARGIN_L: 20,
+	MARGIN_XL: 30,
+	BORDER_SM: 1,
+	BORDER_MD: 2,
+	BORDER_L: 3,
+	BORDER_XL: 5,
+	BORDER_RADIUS_SM: 5,
+	BORDER_RADIUS_MD: 10,
+	BORDER_RADIUS_L: 20,
+	ICON_SIZE: 40,
+	ICON_SIZE_SM: 20,
+	FONT_SM: 12,
+	FONT_MD: 18,
+	FONT_L: 32,
+};
