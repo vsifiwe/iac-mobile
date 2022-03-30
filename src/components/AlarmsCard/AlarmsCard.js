@@ -1,5 +1,5 @@
-import { View, Text, Pressable } from "react-native";
-import React, { useState } from "react";
+import { View, Text, Pressable, ActivityIndicator } from "react-native";
+import React, { useState, useEffect } from "react";
 import styles from "./AlarmsCard.style";
 import { COLORS, DIMENSIONS } from "../../styles";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -7,19 +7,25 @@ import { Switch } from "react-native-switch";
 
 const AlarmsCard = ({ navigation }) => {
 	const [isEnabled, setIsEnabled] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [next, setNext] = useState(new Date());
 	const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+	const currentTime = new Date();
+
+	useEffect(() => {
+		setLoading(true);
+		fetch("https://iac-backend.herokuapp.com/next")
+			.then((res) => res.json())
+			.then((data) => {
+				setNext(new Date(data.next));
+				setLoading(false);
+			});
+	}, []);
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.switch}>
 				<Text style={styles.text_switch}>alarm</Text>
-				{/* <Switch
-					trackColor={{ false: COLORS.LIGHT_GRAY, true: COLORS.DARK_GRAY }}
-					thumbColor={isEnabled ? COLORS.SECONDARY : COLORS.PRIMARY}
-					ios_backgroundColor={COLORS.GRAY}
-					onValueChange={toggleSwitch}
-					value={isEnabled}
-				/> */}
 				<Switch
 					value={isEnabled}
 					onValueChange={toggleSwitch}
@@ -49,7 +55,9 @@ const AlarmsCard = ({ navigation }) => {
 				/>
 				<View style={styles.text_container}>
 					<Text style={styles.subtitle}>now</Text>
-					<Text style={styles.title}>23:30</Text>
+					<Text style={styles.title}>
+						{currentTime.getHours() + ":" + currentTime.getMinutes()}
+					</Text>
 				</View>
 			</View>
 			<View style={styles.separator}></View>
@@ -79,7 +87,13 @@ const AlarmsCard = ({ navigation }) => {
 					style={styles.icon}
 				/>
 				<View style={styles.text_container}>
-					<Text style={styles.title}>7:30</Text>
+					{loading ? (
+						<ActivityIndicator size="large" color={COLORS.PRIMARY} />
+					) : (
+						<Text style={styles.title}>
+							{next.getHours() + ":" + next.getMinutes()}
+						</Text>
+					)}
 					<Text style={styles.subtitle}>wake up</Text>
 				</View>
 			</View>
