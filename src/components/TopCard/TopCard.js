@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./TopCard.style";
 import { COLORS } from "../../styles";
 import axios from "axios";
+import {getData} from '../../helper/storage'
 
 const image = require("../../../assets/background.png");
 
@@ -12,13 +13,17 @@ const TopCard = () => {
 
 	useEffect(() => {
 		setLoading(true);
-		axios.get('https://iac-backend.herokuapp.com/events', {
-			params: {
-				email: 'asifiwemanzi@gmail.com'
-			}
-		}).then(res => setEvents(res.data.events))
-		.then(() => setLoading(false))
-		.catch(err => console.error(err))
+		getData().then(
+			data => 
+			axios.get('https://iac-backend.herokuapp.com/events', {
+				params: {
+					email: data.email
+				}
+			})
+			.then(res => setEvents(res.data.events))
+			.then(() => setLoading(false))
+			.catch(err => console.error(err))
+		).catch(err => console.error(err))
 		
 	}, []);
 

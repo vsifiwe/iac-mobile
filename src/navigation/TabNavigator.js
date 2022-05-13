@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { HomeScreen, SettingsScreen } from "../screens";
+import { HomeScreen, SettingsScreen, AppointmentScreen } from "../screens";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../styles";
@@ -22,6 +22,8 @@ const TabNavigator = () => {
 							iconName = focused ? "planet" : "planet-outline";
 						} else if (route.name === "Settings") {
 							iconName = focused ? "settings" : "settings-outline";
+						} else if (route.name === "Appointments"){
+							iconName = focused ? "calendar" : "calendar-outline";
 						}
 
 						return <Ionicons name={iconName} size={size} color={color} />;
@@ -31,6 +33,7 @@ const TabNavigator = () => {
 				})}
 			>
 				<Tab.Screen name="Home" component={HomeScreen} options={options} />
+				<Tab.Screen name="Appointments" component={AppointmentScreen} options={options} />
 				<Tab.Screen
 					name="Settings"
 					component={SettingsScreen}
