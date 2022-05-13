@@ -1,4 +1,3 @@
-import { View, Text } from "react-native";
 import React from "react";
 import styles from "./Home.style";
 import { StatusBar } from "expo-status-bar";
