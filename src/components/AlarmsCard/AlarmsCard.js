@@ -33,18 +33,22 @@ const AlarmsCard = ({ navigation }) => {
       if(!isEnabled) {
         console.log(`${data.ip}/5/on`)
         axios.get(`http://${data.ip}/5/on`)
-        .then(() => toggleSwitch())
-      }else 
+        .then(() => {
+          toggleSwitch()
+          setVisible(true)
+        })
+      }else {
         axios.get(`http://${data.ip}/5/off`)
         .then(() => {
           toggleSwitch()
           setVisible(true);
-        })
+        })}
       }
-      ).then(() => {
-        toggleSwitch()
-        setVisible(true);
-      })
+      )
+      // .then(() => {
+      //   toggleSwitch()
+      //   setVisible(true);
+      // })
     ;
   };
 

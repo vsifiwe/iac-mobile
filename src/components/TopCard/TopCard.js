@@ -10,17 +10,24 @@ const image = require("../../../assets/background.png");
 const TopCard = () => {
 	const [loading, setLoading] = useState(false);
 	const [events, setEvents] = useState([]);
+	const [date, setDate] = useState([]);
+	const [time, setTime] = useState("")
 
 	useEffect(() => {
 		setLoading(true);
 		getData().then(
 			data => 
-			axios.get('https://iac-backend.herokuapp.com/events', {
+			axios.get('https://iac-django.herokuapp.com/api/events', {
 				params: {
 					email: data.email
 				}
 			})
-			.then(res => setEvents(res.data.events))
+			.then(res => setEvents(res.data.message)).then(() => {
+				setDate(events[0].start.dateTime.split("T"))
+				console.log(date[1])
+				let time = date[1].split(":");
+				setTime(`${time[0]}:${time[1]}`)
+			})
 			.then(() => setLoading(false))
 			.catch(err => console.error(err))
 		).catch(err => console.error(err))
@@ -38,7 +45,7 @@ const TopCard = () => {
 					<>
 						<Text style={styles.title}>Your next appointment:</Text>
 						<Text style={styles.body}>{events[0].summary}</Text>
-						<Text style={styles.time}>18:30</Text>
+						<Text style={styles.time}>{`${date[0]} - ${time}`}</Text>
 					</>
 
 					:
